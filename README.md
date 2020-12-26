@@ -15,3 +15,11 @@ It should not be so hard to develop and should be a lot of fun
 - Run without any bugs
 - Easy install & use for personnal projects
 - Setup patreon
+
+### Specifications
+If you want to edit it on WSL:
+Install SDK from https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu#2004-
+I installed the runtime too, might not be needed
+
+If you want to edit it on Windows:
+Install SDK from https://dotnet.microsoft.com/download/dotnet/5.0
