@@ -1,2 +1,6 @@
 # twitch-chat-bot-dotnet
-A default bot to read messages from any twitch chat and reply (or not) via IRC
+This bot will read chat messages as input.
+Will process them and do stuff on the host machine. 
+
+The end goal is to run any _simple_ emulator (DS, nes, etc) by broadcasting keys to said emulator
+A simple feature includes chaos / order (affects time between messages to let twitch chat take action)
