@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-// using File;
 
-namespace twitch_bot
+namespace ChatBot
 {
     class Program
     {
-
         static private bool good_settings(Dictionary<string, string> settings)
         {
             if (settings == null)
@@ -24,6 +22,7 @@ namespace twitch_bot
 
             return true;
         }
+
         static private bool update_settings(string line, int count, Dictionary<string, string> settings)
         {
             if (string.IsNullOrWhiteSpace(line))
@@ -50,12 +49,13 @@ namespace twitch_bot
             settings[el1] = el2;
             return true;
         }
+
         static private Dictionary<string, string> read_settings()
         {
             var settings = new Dictionary<string, string> {
                 {"platform", "twitch" },
                 {"channel", null},
-                {"bot_name", "EMU_DS"},
+                {"bot name", "EMU_DS"},
                 {"server", "irc.chat.twitch.tv"},
                 {"port", "6667"},
                 {"password", null},
@@ -76,6 +76,22 @@ namespace twitch_bot
             return settings;
         }
 
+        static private void launch(Dictionary<string, string> settings)
+        {
+            string platform = settings["platform"];
+            if (platform == "twitch")
+            {
+                Twitch tmp = new Twitch(settings);
+                tmp.platform();
+            }
+
+            // else if (platform == "youtube")
+            //     Youtube chat = new Chatbot();
+            else
+                Console.Error.WriteLine($"Platform '{platform}' was not found");
+        }
+
+
         static void Main(string[] args)
         {
             if (!File.Exists("settings"))
@@ -87,8 +103,8 @@ namespace twitch_bot
             var settings = read_settings();
             if (!good_settings(settings))
                 return;
+
+            launch(settings);
         }
-
-
     }
 }
