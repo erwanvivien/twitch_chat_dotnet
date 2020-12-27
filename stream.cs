@@ -42,7 +42,17 @@ namespace ChatBot
             // irc.Start();
 
             while (true)
-                irc.read();
+            {
+                List<string[]> tmp = irc.read();
+                if (tmp == null || tmp.Count == 0)
+                    continue;
+
+                foreach (var e in tmp)
+                {
+                    string name = e[0], content = e[1];
+                    Console.WriteLine($"{name}: '{content}'");
+                }
+            }
             // irc.read();
         }
 
