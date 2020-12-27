@@ -1,6 +1,4 @@
-using System;
-
-namespace twitch_bot
+namespace ChatBot
 {
     class Winapi
     {

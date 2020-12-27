@@ -1,6 +1,6 @@
 namespace ChatBot
 {
-    class Utils
+    class IRC
     {
 
     }
