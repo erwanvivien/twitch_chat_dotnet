@@ -13,9 +13,6 @@ namespace ChatBot
         protected string bot_name = "EMU_DS";
 
         public abstract void platform();
-
-
-        public Bot() { }
     }
 
     class Twitch : Bot
