@@ -7,6 +7,7 @@ using System.Threading;
 
 namespace ChatBot
 {
+
     abstract class Bot
     {
         protected string password = null;
@@ -18,9 +19,39 @@ namespace ChatBot
         public abstract void platform();
     }
 
+
     class Twitch : Bot
     {
+        static public void upward()
+        {
+            Console.WriteLine("upward");
+        }
+        static public void downward()
+        {
+            Console.WriteLine("downward");
+        }
+        static public void left()
+        {
+            Console.WriteLine("left");
+        }
+        static public void right()
+        {
+            Console.WriteLine("right");
+        }
+
         private IRC irc = null;
+
+        private delegate void myDelegate();
+
+        private Dictionary<string, myDelegate> possibilities =
+            new Dictionary<string, myDelegate>
+            {
+                { "upward", new myDelegate(upward) },
+                { "downward", new myDelegate(downward) },
+                { "left", new myDelegate(left) },
+                { "right", new myDelegate(right) },
+            };
+
 
         private void set(string channel, string password, string server, string port, string bot_name)
         {
@@ -37,10 +68,6 @@ namespace ChatBot
 
         public override void platform()
         {
-            // IRCbot irc = new IRCbot(server, port, bot_name, password, channel);
-
-            // irc.Start();
-
             while (true)
             {
                 List<string[]> tmp = irc.read();
@@ -50,10 +77,11 @@ namespace ChatBot
                 foreach (var e in tmp)
                 {
                     string name = e[0], content = e[1];
-                    Console.WriteLine($"{name}: '{content}'");
+                    Console.WriteLine($"<- {name}: '{content}'");
+                    if (possibilities.ContainsKey(content))
+                        possibilities[content]();
                 }
             }
-            // irc.read();
         }
 
         public Twitch(string channel, string password, string server = "irc.chat.twitch.tv",
