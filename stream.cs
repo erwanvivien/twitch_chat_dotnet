@@ -20,13 +20,19 @@ namespace ChatBot
 
     class Twitch : Bot
     {
+        private IRC irc = null;
+
         private void set(string channel, string password, string server, string port, string bot_name)
         {
+            int port_nb = Int32.Parse(port);
+
             this.channel = channel;
             this.password = password;
             this.server = server;
-            this.port = Int16.Parse(port);
+            this.port = port_nb;
             this.bot_name = bot_name;
+
+            irc = new IRC(server, port_nb, bot_name, password, channel);
         }
 
         public override void platform()
