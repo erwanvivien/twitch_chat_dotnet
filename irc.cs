@@ -39,8 +39,10 @@ namespace ChatBot
                     // or
                     // PING :tmi.twitch.tv
                     // We split thanks to ':' and remove empty entries and then trim them
-                    string[] splitInput = inputLine.Split(new Char[] { ':' }, 3,
+                    string[] splitInput = inputLine.Split(new Char[] { ':' }, 2,
                         StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+
+                    Console.WriteLine(inputLine);
 
                     // If one message is a ping message we reply but do not add it to the message list
                     if (splitInput[0] == "PING")
@@ -53,8 +55,8 @@ namespace ChatBot
                     else if (inputLine.Contains("PRIVMSG"))
                     {
                         // add the name / content to the list
-                        string name = splitInput[1].Split("!")[0];
-                        string content = splitInput[2];
+                        string name = splitInput[0].Split("!")[0];
+                        string content = splitInput[1];
 
                         lines.Add(new string[] { name, content });
                     }
