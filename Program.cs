@@ -7,6 +7,18 @@ namespace twitch_bot
 {
     class Program
     {
+
+        static private bool good_settings(Dictionary<string, string> settings)
+        {
+            if (settings == null)
+                return false;
+
+            foreach (var d in settings)
+                if (d.Value == null)
+                    return false;
+
+            return true;
+        }
         static private bool update_settings(string line, int count, Dictionary<string, string> settings)
         {
             if (string.IsNullOrWhiteSpace(line))
@@ -36,7 +48,6 @@ namespace twitch_bot
             }
 
             settings[el1] = el2;
-
             return true;
         }
         static private Dictionary<string, string> read_settings()
@@ -74,7 +85,7 @@ namespace twitch_bot
             }
 
             var settings = read_settings();
-            if (settings == null)
+            if (!good_settings(settings))
                 return;
         }
 
