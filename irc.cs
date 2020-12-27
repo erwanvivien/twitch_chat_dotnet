@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
@@ -18,50 +19,50 @@ namespace ChatBot
         public TcpClient irc = null;
         public NetworkStream stream = null;
 
-        public string read()
+        public List<string[]> read()
         {
             var reader = new StreamReader(stream);
             var writer = new StreamWriter(stream);
 
+            List<string[]> lines = new List<string[]>();
             try
             {
-                StringBuilder sb = new StringBuilder();
-
-                // return reader.ReadToEnd();
-
                 string inputLine = null;
                 while ((inputLine = reader.ReadLine()) != null)
                 {
-                    Console.WriteLine("<- " + inputLine);
-
                     // split the lines sent from the server by spaces (seems to be the easiest way to parse them)
-                    string[] splitInput = inputLine.Split(new Char[] { ':' });
-
+                    string[] splitInput = inputLine.Split(new Char[] { ':' }, 3);
                     if (splitInput[0] == "PING")
                     {
                         string PongReply = splitInput[1];
                         writer.WriteLine("PONG " + PongReply);
                         writer.Flush();
                     }
+                    else if (inputLine.Contains("PRIVMSG"))
+                    {
+                        string name = splitInput[1].Split("!")[0];
+                        string content = splitInput[2];
 
-                    sb.Append(inputLine + "\n");
+                        lines.Add(new string[] { name, content });
+                    }
                 }
-                return sb.ToString();
+
+                return lines;
             }
             catch
             {
-                return null;
+                return lines;
             }
         }
 
-        // public string[] get_message()
-        // {
-        //     string line = read();
-        //     if (line == null)
-        //         return null;
+        public string[] get_message()
+        {
+            List<string[]> line = read();
+            if (line == null)
+                return null;
 
-        //     return new string[] { "" };
-        // }
+            return new string[] { "" };
+        }
 
         public IRC(string server, int port, string name, string pass, string chann)
         {
@@ -95,7 +96,7 @@ namespace ChatBot
                 writer.Flush();
 
                 // Might be needed if shit computer
-                // Thread.Sleep(2 * 1000);
+                Thread.Sleep(1 * 1000);
 
                 Console.WriteLine($"IRC: Joining {chann} channel");
                 writer.WriteLine($"JOIN {chann}");
