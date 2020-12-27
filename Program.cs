@@ -36,13 +36,8 @@ namespace twitch_bot
             }
 
             string[] elements = line.Split(":", 2, StringSplitOptions.RemoveEmptyEntries);
-            if (elements.Length != 2)
-            {
-                Console.Error.WriteLine($"FILE: Got {elements.Length} elements on line {count} expected 2");
-                return false;
-            }
-
             string el1 = elements[0].Trim(), el2 = elements[1].Trim();
+
             if (!settings.ContainsKey(el1))
             {
                 Console.Error.WriteLine($"FILE: No such '{el1}' in line {count} as property\n\nPossible:");
