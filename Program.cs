@@ -18,15 +18,14 @@ namespace twitch_bot
                 return false;
             }
 
-            string[] elements = line.Split(":", StringSplitOptions.RemoveEmptyEntries);
-
+            string[] elements = line.Split(":", 2, StringSplitOptions.RemoveEmptyEntries);
             if (elements.Length != 2)
             {
                 Console.WriteLine($"FILE: Got {elements.Length} elements on line {count} expected 2");
                 return false;
             }
 
-            string el1 = elements[0], el2 = elements[1];
+            string el1 = elements[0].Trim(), el2 = elements[1].Trim();
             if (!settings.ContainsKey(el1))
             {
                 Console.WriteLine($"FILE: No such '{el1}' in line {count} as property\n\nPossible:");
@@ -36,7 +35,7 @@ namespace twitch_bot
                 return false;
             }
 
-            count++;
+            settings[el1] = el2;
 
             return true;
         }
@@ -60,6 +59,7 @@ namespace twitch_bot
             {
                 if (!update_settings(line, count, settings))
                     return null;
+                count++;
             }
 
             return settings;
@@ -76,8 +76,6 @@ namespace twitch_bot
             var settings = read_settings();
             if (settings == null)
                 return;
-
-
         }
 
 
