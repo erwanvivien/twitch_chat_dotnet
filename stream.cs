@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Threading;
 
 
@@ -39,12 +41,9 @@ namespace ChatBot
 
             // irc.Start();
 
-            for (int i = 0; i < 10; i++)
-            {
-                string tmp = this.irc.read();
-                Console.WriteLine("read: '" + tmp + "'\n======");
-                Thread.Sleep(2000);
-            }
+            while (true)
+                irc.read();
+            // irc.read();
         }
 
         public Twitch(string channel, string password, string server = "irc.chat.twitch.tv",
