@@ -1,6 +1,6 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 // using File;
 
 namespace twitch_bot
@@ -14,8 +14,13 @@ namespace twitch_bot
                 return false;
 
             foreach (var d in settings)
+            {
                 if (d.Value == null)
+                {
+                    Console.Error.WriteLine("'" + d.Key + "' was found not having a value");
                     return false;
+                }
+            }
 
             return true;
         }
@@ -26,23 +31,23 @@ namespace twitch_bot
 
             if (!line.Contains(":"))
             {
-                Console.WriteLine($"FILE: Line {count} has no semicolon");
+                Console.Error.WriteLine($"FILE: Line {count} has no semicolon");
                 return false;
             }
 
             string[] elements = line.Split(":", 2, StringSplitOptions.RemoveEmptyEntries);
             if (elements.Length != 2)
             {
-                Console.WriteLine($"FILE: Got {elements.Length} elements on line {count} expected 2");
+                Console.Error.WriteLine($"FILE: Got {elements.Length} elements on line {count} expected 2");
                 return false;
             }
 
             string el1 = elements[0].Trim(), el2 = elements[1].Trim();
             if (!settings.ContainsKey(el1))
             {
-                Console.WriteLine($"FILE: No such '{el1}' in line {count} as property\n\nPossible:");
+                Console.Error.WriteLine($"FILE: No such '{el1}' in line {count} as property\n\nPossible:");
                 foreach (var tmp in settings)
-                    Console.WriteLine("- " + tmp.Key);
+                    Console.Error.WriteLine("- " + tmp.Key);
 
                 return false;
             }
@@ -80,7 +85,7 @@ namespace twitch_bot
         {
             if (!File.Exists("settings"))
             {
-                Console.WriteLine("No 'settings' file found.");
+                Console.Error.WriteLine("No 'settings' file found.");
                 return;
             }
 
