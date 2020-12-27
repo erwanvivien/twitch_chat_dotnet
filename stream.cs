@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 
 namespace ChatBot
@@ -29,30 +30,25 @@ namespace ChatBot
             this.port = port_nb;
             this.bot_name = bot_name;
 
-            irc = new IRC(server, port_nb, bot_name, password, channel);
+            this.irc = new IRC(server, port_nb, bot_name, password, channel);
         }
 
         public override void platform()
         {
-            Console.WriteLine("test");
+            // IRCbot irc = new IRCbot(server, port, bot_name, password, channel);
+
+            // irc.Start();
+
+            for (int i = 0; i < 10; i++)
+            {
+                string tmp = this.irc.read();
+                Console.WriteLine("read: '" + tmp + "'\n======");
+                Thread.Sleep(2000);
+            }
         }
 
-        public Twitch(string channel, string password)
-        {
-            set(channel, password, "irc.chat.twitch.tv", "6667", "EMU_DS");
-        }
-
-        public Twitch(string channel, string password, string server)
-        {
-            set(channel, password, server, "6667", "EMU_DS");
-        }
-
-        public Twitch(string channel, string password, string server, string port)
-        {
-            set(channel, password, server, port, "EMU_DS");
-        }
-
-        public Twitch(string channel, string password, string server, string port, string bot_name)
+        public Twitch(string channel, string password, string server = "irc.chat.twitch.tv",
+            string port = "6667", string bot_name = "EMU_DS")
         {
             set(channel, password, server, port, bot_name);
         }
