@@ -8,6 +8,18 @@ namespace ChatBot
         {
             Console.WriteLine("FCT: upward");
         }
+        static public void act_downward()
+        {
+            Console.WriteLine("FCT: downward");
+        }
+        static public void act_left()
+        {
+            Console.WriteLine("FCT: left");
+        }
+        static public void act_right()
+        {
+            Console.WriteLine("FCT: right");
+        }
         static public void act_a()
         {
             Console.WriteLine("FCT: a");
@@ -32,35 +44,21 @@ namespace ChatBot
         {
             Console.WriteLine("FCT: y");
         }
-
         static public void act_r1()
         {
             Console.WriteLine("FCT: y");
         }
-
         static public void act_r2()
         {
             Console.WriteLine("FCT: y");
         }
-
+        static public void act_help()
+        {
+            Console.WriteLine("FCT: y");
+        }
         static public void act_nothing()
         {
             Console.WriteLine("FCT: nothing");
-        }
-
-        static public void act_downward()
-        {
-            Console.WriteLine("FCT: downward");
-        }
-
-        static public void act_left()
-        {
-            Console.WriteLine("FCT: left");
-        }
-
-        static public void act_right()
-        {
-            Console.WriteLine("FCT: right");
         }
     }
 }

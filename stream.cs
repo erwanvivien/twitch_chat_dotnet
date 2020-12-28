@@ -49,6 +49,8 @@ namespace ChatBot
                 { "r1", new myDelegate(Winapi.act_r1) },
                 { "r2", new myDelegate(Winapi.act_r2) },
 
+                { "help", new myDelegate(Winapi.act_help) },
+
                 { "void", new myDelegate(Winapi.act_nothing) },
             };
 
