@@ -11,12 +11,6 @@ namespace ChatBot
 
     abstract class Bot
     {
-        protected string password = null;
-        protected string channel = null;
-        protected int port = 0;
-        protected string server = null;
-        protected string bot_name = "EMU_DS";
-
         // Usefull for future platforms
         public abstract List<string[]> read();
         public abstract void start();
@@ -25,6 +19,12 @@ namespace ChatBot
 
     class Twitch : Bot
     {
+        private string password = null;
+        private string channel = null;
+        private int port = 0;
+        private string server = null;
+        private string bot_name = "EMU_DS";
+
         private IRC irc = null;
 
         private delegate void myDelegate();
