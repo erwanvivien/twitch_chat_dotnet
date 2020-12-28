@@ -17,7 +17,7 @@ namespace ChatBot
             {
                 if (d.Value == null)
                 {
-                    Console.Error.WriteLine("'" + d.Key + "' was found not having a value");
+                    Console.Error.WriteLine("'" + d.Key + "' has no value (needed)");
                     return false;
                 }
             }
@@ -41,14 +41,14 @@ namespace ChatBot
 
             // Extracts (key, value)
             string[] elements = line.Split(":", 2, StringSplitOptions.RemoveEmptyEntries);
-            string el1 = elements[0].Trim(), el2 = elements[1].Trim();
+            string el1 = elements[0].Trim().ToLower(), el2 = elements[1].Trim();
 
             // Wrong key
             if (!settings.ContainsKey(el1))
             {
                 Console.Error.WriteLine($"FILE: No such '{el1}' in line {count} as property\n\nPossible:");
                 foreach (var tmp in settings)
-                    Console.Error.WriteLine("- " + tmp.Key);
+                    Console.Error.WriteLine("- " + tmp.Key + (tmp.Value == null ? " (mandatory)" : ""));
 
                 return false;
             }
@@ -73,6 +73,9 @@ namespace ChatBot
                 {"port", "6667"},
                 {"password", null},
                 // might need other parameters (for logs, etc)
+                {"log_irc", "false"},
+                {"log_fct", "false"},
+                {"window name", null},
             };
 
             System.IO.StreamReader file =
@@ -115,6 +118,7 @@ namespace ChatBot
                 return;
 
             // Only Twitch for now
+            Winapi win = new Winapi(settings);
             launch(settings);
         }
     }
