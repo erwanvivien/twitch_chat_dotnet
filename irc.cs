@@ -97,6 +97,8 @@ namespace ChatBot
                 this.stream.ReadTimeout = 5;
                 var writer = new StreamWriter(this.stream);
 
+                // Authenticating through IRC
+                // USER, PASS, NICK and then JOIN (in this order), all mandatory
                 Console.WriteLine($"IRC: Connecting as {name}");
                 writer.WriteLine($"USER {name} {name} {name} :EMU_BOT");
                 writer.Flush();
@@ -120,12 +122,15 @@ namespace ChatBot
             }
             catch (Exception e)
             {
+                // Should make the program crash but lazy
                 Console.Error.WriteLine("IRC: Could not connect: \n\n" + e);
             }
         }
 
         ~IRC()
         {
+            // Destructor if possible but there might be a problem of implementation on my side
+            // TODO: Not working
             Console.WriteLine("~IRC: Destroying stream");
             this.stream.Close();
             Console.WriteLine("~IRC: Destroying irc");

@@ -123,6 +123,7 @@ namespace ChatBot
             }
         }
 
+        // Constructors
         public Twitch(string channel, string password, string server = "irc.chat.twitch.tv",
             string port = "6667", string bot_name = "EMU_DS")
         {

@@ -8,9 +8,11 @@ namespace ChatBot
     {
         static private bool good_settings(Dictionary<string, string> settings)
         {
+            // Log already printed if null
             if (settings == null)
                 return false;
 
+            // Displays every unset variables
             foreach (var d in settings)
             {
                 if (d.Value == null)
@@ -20,23 +22,28 @@ namespace ChatBot
                 }
             }
 
+            // No error
             return true;
         }
 
         static private bool update_settings(string line, int count, Dictionary<string, string> settings)
         {
+            // Skips empty lines (tab/whitespaces included)
             if (string.IsNullOrWhiteSpace(line))
                 return true;
 
+            // Bad format (key: value)
             if (!line.Contains(":"))
             {
                 Console.Error.WriteLine($"FILE: Line {count} has no semicolon");
                 return false;
             }
 
+            // Extracts (key, value)
             string[] elements = line.Split(":", 2, StringSplitOptions.RemoveEmptyEntries);
             string el1 = elements[0].Trim(), el2 = elements[1].Trim();
 
+            // Wrong key
             if (!settings.ContainsKey(el1))
             {
                 Console.Error.WriteLine($"FILE: No such '{el1}' in line {count} as property\n\nPossible:");
@@ -82,7 +89,7 @@ namespace ChatBot
             if (platform == "twitch")
             {
                 Twitch tmp = new Twitch(settings);
-                tmp.platform();
+                tmp.start();
             }
 
             // else if (platform == "youtube")
