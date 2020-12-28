@@ -1,9 +1,31 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace ChatBot
 {
     class Winapi
     {
+        public IntPtr hwnd = IntPtr.Zero;
+
+        static public IntPtr set_window(string wName)
+        {
+            foreach (Process pList in Process.GetProcesses())
+            {
+                if (pList.MainWindowTitle.Contains(wName))
+                {
+                    return pList.MainWindowHandle;
+                }
+            }
+
+            return IntPtr.Zero;
+        }
+
+        public Winapi(Dictionary<string, string> settings)
+        {
+            this.hwnd = set_window(settings["window name"]);
+        }
+
         static public void act_upward()
         {
             Console.WriteLine("FCT: upward");

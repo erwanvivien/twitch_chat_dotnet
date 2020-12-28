@@ -8,14 +8,12 @@ using System.Threading;
 
 namespace ChatBot
 {
-
     abstract class Bot
     {
         // Usefull for future platforms
         public abstract List<string[]> read();
         public abstract void start();
     }
-
 
     class Twitch : Bot
     {
