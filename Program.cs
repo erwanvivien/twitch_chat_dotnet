@@ -59,6 +59,12 @@ namespace ChatBot
 
         static private Dictionary<string, string> read_settings()
         {
+            if (!File.Exists("settings"))
+            {
+                Console.Error.WriteLine("No 'settings' file found.");
+                return null;
+            }
+
             var settings = new Dictionary<string, string> {
                 {"platform", "twitch" },
                 {"channel", null},
@@ -66,6 +72,7 @@ namespace ChatBot
                 {"server", "irc.chat.twitch.tv"},
                 {"port", "6667"},
                 {"password", null},
+                // might need other parameters (for logs, etc)
             };
 
             System.IO.StreamReader file =
@@ -73,6 +80,7 @@ namespace ChatBot
 
             int count = 1;
             string line = null;
+            // Read every lines and updates settings accordingly
             while ((line = file.ReadLine()) != null)
             {
                 if (!update_settings(line, count, settings))
@@ -89,6 +97,7 @@ namespace ChatBot
             if (platform == "twitch")
             {
                 Twitch tmp = new Twitch(settings);
+                // Blocking function, no need to do anything else
                 tmp.start();
             }
 
@@ -101,16 +110,11 @@ namespace ChatBot
 
         static void Main(string[] args)
         {
-            if (!File.Exists("settings"))
-            {
-                Console.Error.WriteLine("No 'settings' file found.");
-                return;
-            }
-
             var settings = read_settings();
             if (!good_settings(settings))
                 return;
 
+            // Only Twitch for now
             launch(settings);
         }
     }
