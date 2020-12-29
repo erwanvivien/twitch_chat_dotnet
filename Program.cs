@@ -119,6 +119,12 @@ namespace ChatBot
 
             // Only Twitch for now
             Winapi win = new Winapi(settings);
+            if (Winapi.hwnd == IntPtr.Zero)
+            {
+                Console.WriteLine("WIN: No window with name '" + settings["window name"] + "' was found.");
+                return;
+            }
+
             launch(settings);
         }
     }
