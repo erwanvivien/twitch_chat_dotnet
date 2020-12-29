@@ -16,14 +16,6 @@ It should not be so hard to develop and should be a lot of fun
 - Easy install & use for personnal projects
 - Setup patreon
 
-### Specifications
-If you want to edit it on WSL:
-Install SDK from https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu#2004-
-I installed the runtime too, might not be needed
-
-If you want to edit it on Windows:
-Install SDK from https://dotnet.microsoft.com/download/dotnet/5.0
-
 ## How to use
 ### For Streamer
 - Install any DS emulator (DeSmuME was used to test)
@@ -42,3 +34,11 @@ window name: desmume (if you use DeSmuME)
 - 'Up', 'Down', 'Right' and 'Left' can be used in the chat to move character (Can be changed by streamer)
 - 'A', 'B', 'X' and 'Y' can be used to make character do some actions
 - 'W' is L (behind left) and 'C' is R (behind right)
+
+
+### Specifications
+If you want to edit it on WSL:
+Install SDK from https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu#2004-. I installed the runtime too, might not be needed
+
+If you want to edit it on Windows:
+Install SDK from https://dotnet.microsoft.com/download/dotnet/5.0
