@@ -94,7 +94,7 @@ namespace ChatBot
             return settings;
         }
 
-        static private void launch(Dictionary<string, string> settings)
+        static private void launch(Dictionary<string, string> settings, Winapi win)
         {
             string platform = settings["platform"];
             if (platform == "twitch")
@@ -119,13 +119,10 @@ namespace ChatBot
 
             // Only Twitch for now
             Winapi win = new Winapi(settings);
-            if (Winapi.hwnd == IntPtr.Zero)
-            {
-                Console.WriteLine("WIN: No window with name '" + settings["window name"] + "' was found.");
+            if (!win.good(settings))
                 return;
-            }
 
-            launch(settings);
+            launch(settings, win);
         }
     }
 }
