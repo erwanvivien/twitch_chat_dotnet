@@ -79,8 +79,8 @@ namespace ChatBot
             // Inits `possibilities_count` with same KEY
             possibilities.Keys.ToList().ForEach(x => possibilities_count.Add(x, 0));
 
-            if (File.Exists("help_string"))
-                help_string = File.ReadAllText("help_string");
+            if (File.Exists("help"))
+                help_string = File.ReadAllText("help");
             else
                 help_string = "Directionnal arrows (Up, Left, Right, Down)\na, b, x, y\nw for R and c for L";
         }
