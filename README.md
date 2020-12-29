@@ -30,11 +30,14 @@ password: oauth:.........       # (get this from https://twitchapps.com/tmi/)
 window name: desmume            # (if you use DeSmuME)
 ```
 
+More [here](https://github.com/erwanvivien/stream-chat-bot-dotnet/blob/main/streamer/README.md)
+
 ### For chat
 - 'Up', 'Down', 'Right' and 'Left' can be used in the chat to move character (Can be changed by streamer)
 - 'A', 'B', 'X' and 'Y' can be used to make character do some actions
 - 'W' is L (behind left) and 'C' is R (behind right)
 
+More [here](https://github.com/erwanvivien/stream-chat-bot-dotnet/blob/main/chat/README.md)
 
 ### Specifications
 If you want to edit it on WSL:
