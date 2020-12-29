@@ -76,6 +76,25 @@ namespace ChatBot
                 {"log_irc", "false"},
                 {"log_fct", "false"},
                 {"window name", null},
+
+                // Might need to customize key presses
+                {"up", "up"},
+                {"down", "down"},
+                {"left", "left"},
+                {"right", "right"},
+
+                {"l", "l"},
+                {"r", "r"},
+
+                {"a", "a"},
+                {"b", "b"},
+                {"x", "x"},
+                {"y", "y"},
+
+                {"l1", "l1"},
+                {"l2", "l2"},
+                {"r1", "r1"},
+                {"r2", "r2"},
             };
 
             System.IO.StreamReader file =
@@ -103,7 +122,6 @@ namespace ChatBot
                 // Blocking function, no need to do anything else
                 tmp.start();
             }
-
             // else if (platform == "youtube")
             //     Youtube chat = new Chatbot();
             else
