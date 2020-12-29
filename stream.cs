@@ -47,7 +47,7 @@ namespace ChatBot
                 { "r1", new myDelegate(Winapi.act_r1) },
                 { "r2", new myDelegate(Winapi.act_r2) },
 
-                { "help", new myDelegate(Winapi.act_help) },
+                // { "help", new myDelegate(Winapi.act_help) },
 
                 { "void", new myDelegate(Winapi.act_nothing) },
             };
@@ -119,7 +119,10 @@ namespace ChatBot
                     content = content.ToLower();
 
                     if (possibilities_count.ContainsKey(content))
+                    {
+
                         possibilities_count[content]++;
+                    }
                 }
             }
         }
