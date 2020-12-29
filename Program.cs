@@ -95,6 +95,8 @@ namespace ChatBot
                 {"l2", "l2"},
                 {"r1", "r1"},
                 {"r2", "r2"},
+
+                {"help", "help"},
             };
 
             System.IO.StreamReader file =
