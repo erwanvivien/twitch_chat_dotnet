@@ -92,7 +92,6 @@ namespace ChatBot
                     Console.WriteLine($"ACT: {passed} miliseconds have passed");
 
                     // Resets timer
-                    now = current;
 
                     /// Will return the max value
                     var keyOfMaxValue = possibilities_count.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
@@ -101,6 +100,8 @@ namespace ChatBot
 
                     // Executes max key function
                     possibilities[keyOfMaxValue]();
+
+                    now = DateTimeOffset.Now.ToUnixTimeMilliseconds();
                 }
 
                 // Reads chat (calls irc.read())
