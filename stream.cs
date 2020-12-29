@@ -17,6 +17,7 @@ namespace ChatBot
 
     class Twitch : Bot
     {
+        private string help_string = null;
         private string password = null;
         private string channel = null;
         private int port = 0;
@@ -47,7 +48,9 @@ namespace ChatBot
                 { "r1", new myDelegate(Winapi.act_r1) },
                 { "r2", new myDelegate(Winapi.act_r2) },
 
-                // { "help", new myDelegate(Winapi.act_help) },
+                // Should be void function, just need it for simple checks
+                // act_help or nothing are the same (just different logs)
+                { "help", new myDelegate(Winapi.act_help) },
 
                 { "void", new myDelegate(Winapi.act_nothing) },
             };
@@ -75,6 +78,11 @@ namespace ChatBot
 
             // Inits `possibilities_count` with same KEY
             possibilities.Keys.ToList().ForEach(x => possibilities_count.Add(x, 0));
+
+            if (File.Exists("help_string"))
+                help_string = File.ReadAllText("help_string");
+            else
+                help_string = "Directionnal arrows (Up, Left, Right, Down)\na, b, x, y\nw for R and c for L";
         }
 
         public override void start()
@@ -118,9 +126,12 @@ namespace ChatBot
                     Console.WriteLine($"<- {name}: '{content}'");
                     content = content.ToLower();
 
-                    if (possibilities_count.ContainsKey(content))
+                    if (content == "help")
                     {
-
+                        irc.send(help_string, name);
+                    }
+                    else if (possibilities_count.ContainsKey(content))
+                    {
                         possibilities_count[content]++;
                     }
                 }

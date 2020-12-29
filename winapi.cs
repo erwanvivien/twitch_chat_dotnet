@@ -127,7 +127,6 @@ namespace ChatBot
         static public void act_help()
         {
             Console.WriteLine("FCT: help");
-
         }
         static public void act_nothing()
         {
