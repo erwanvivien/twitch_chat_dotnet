@@ -78,6 +78,17 @@ namespace ChatBot
             }
         }
 
+        public void send(string content, string username = null)
+        {
+            var writer = new StreamWriter(this.stream);
+            if (username == null)
+                writer.WriteLine(content);
+            else
+                writer.WriteLine($"PRIVMSG {username} :{content}");
+
+            writer.Flush();
+        }
+
         public IRC(string server, int port, string name, string pass, string chann)
         {
             this.chann = chann;
@@ -100,23 +111,19 @@ namespace ChatBot
                 // Authenticating through IRC
                 // USER, PASS, NICK and then JOIN (in this order), all mandatory
                 Console.WriteLine($"IRC: Connecting as {name}");
-                writer.WriteLine($"USER {name} {name} {name} :EMU_BOT");
-                writer.Flush();
+                send($"USER {name} {name} {name} :EMU_BOT");
 
                 Console.WriteLine($"IRC: Authenticating");
-                writer.WriteLine($"PASS {pass}");
-                writer.Flush();
+                send($"PASS {pass}");
 
                 Console.WriteLine($"IRC: NICK {name}");
-                writer.WriteLine($"NICK {pass}");
-                writer.Flush();
+                send($"NICK {pass}");
 
                 // Might be needed if shit computer
                 Thread.Sleep(1 * 1000);
 
                 Console.WriteLine($"IRC: Joining {chann} channel");
-                writer.WriteLine($"JOIN {chann}");
-                writer.Flush();
+                send($"JOIN {chann}");
 
                 Console.WriteLine("===============================================\n\n");
             }
