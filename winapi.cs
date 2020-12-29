@@ -24,6 +24,9 @@ namespace ChatBot
         const int VK_RIGHT = 0x27;
         const int VK_DOWN = 0x28;
 
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string lclassName, string windowTitle);
+
         static public IntPtr set_window(string wName)
         {
             string name = wName.ToLower();
@@ -33,6 +36,7 @@ namespace ChatBot
                 {
                     Console.WriteLine("WIN: This window was found: '" +
                             pList.MainWindowTitle + "'");
+                    // Might need to do some findWindowEx
                     return pList.MainWindowHandle;
                 }
             }
