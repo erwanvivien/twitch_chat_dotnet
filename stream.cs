@@ -83,6 +83,8 @@ namespace ChatBot
                 help_string = File.ReadAllText("help");
             else
                 help_string = "Directionnal arrows (Up, Left, Right, Down)\na, b, x, y\nw for R and c for L";
+
+            help_string += "\nIn case you want to support my work here is my patreon:\nhttps://www.patreon.com/bePatron?u=37554585";
         }
 
         public override void start()
