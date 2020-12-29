@@ -23,11 +23,11 @@ It should not be so hard to develop and should be a lot of fun
 - Create a 'settings' file next to executable
 - Run executable
 
-A default 'settings' looks like this
+A default 'settings' looks like this:
 ```
 channel: #streamer_live_name
-password: oauth:.........   (get this from https://twitchapps.com/tmi/)
-window name: desmume (if you use DeSmuME)
+password: oauth:.........       # (get this from https://twitchapps.com/tmi/)
+window name: desmume            # (if you use DeSmuME)
 ```
 
 ### For chat
