@@ -16,8 +16,13 @@ namespace ChatBot
         static extern bool PostMessage(IntPtr hWnd,
                   UInt32 Msg, int wParam, int lParam);
 
-        const uint WM_KEYDOWN = 0x100;
-        const uint WM_KEYUP = 0x101;
+        const int WM_KEYDOWN = 0x100;
+        const int WM_KEYUP = 0x101;
+
+        const int VK_LEFT = 0x25;
+        const int VK_UP = 0x26;
+        const int VK_RIGHT = 0x27;
+        const int VK_DOWN = 0x28;
 
         static public IntPtr set_window(string wName)
         {
@@ -35,6 +40,17 @@ namespace ChatBot
             return IntPtr.Zero;
         }
 
+        public bool good(Dictionary<string, string> settings)
+        {
+            if (hwnd == IntPtr.Zero)
+            {
+                Console.WriteLine("WIN: No window with name '" + settings["window name"] + "' was found.");
+                return false;
+            }
+
+            return true;
+        }
+
         public Winapi(Dictionary<string, string> settings)
         {
             hwnd = set_window(settings["window name"]);
@@ -43,18 +59,30 @@ namespace ChatBot
         static public void act_upward()
         {
             Console.WriteLine("FCT: upward");
+            PostMessage(hwnd, WM_KEYDOWN, VK_UP, 0);
+            PostMessage(hwnd, WM_KEYUP, VK_UP, 0);
+
         }
         static public void act_downward()
         {
             Console.WriteLine("FCT: downward");
+            PostMessage(hwnd, WM_KEYDOWN, VK_DOWN, 0);
+            PostMessage(hwnd, WM_KEYUP, VK_DOWN, 0);
+
         }
         static public void act_left()
         {
             Console.WriteLine("FCT: left");
+            PostMessage(hwnd, WM_KEYDOWN, VK_LEFT, 0);
+            PostMessage(hwnd, WM_KEYUP, VK_LEFT, 0);
+
         }
         static public void act_right()
         {
             Console.WriteLine("FCT: right");
+            PostMessage(hwnd, WM_KEYDOWN, VK_RIGHT, 0);
+            PostMessage(hwnd, WM_KEYUP, VK_RIGHT, 0);
+
         }
         static public void act_a()
         {
@@ -99,6 +127,7 @@ namespace ChatBot
         static public void act_help()
         {
             Console.WriteLine("FCT: help");
+
         }
         static public void act_nothing()
         {
