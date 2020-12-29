@@ -29,4 +29,4 @@ window name:    name                    # A running application (DeSmuME general
 
 Any key from this list can be changed to other text (default is itself)
 [ 'up', 'down', 'left', 'right', 'l', 'r', 'a', 'b', 'x', 'y', 'l1', 'l2', 'r1', 'r2' ]
-KEY:            [text]                  # if you want to 'up' with 'bruh' type: 'up: bruh'
+KEY:            [text]                  # if you want to 'up' with 'bruh' put 'up: bruh'
