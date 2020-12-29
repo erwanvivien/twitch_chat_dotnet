@@ -1,9 +1,10 @@
-All here is non-case-sensitive
+# For Chat
+All here is non-case-sensitive and only the default help message
 
-You can control movements by typing 'up', 'down', 'right' or 'left'
-You can do any action from the DS ('A', 'B', 'X' or 'Y')
-L is 'l'
-R is 'r'
+- You can control movements by typing 'up', 'down', 'right' or 'left'
+- You can do any action from the DS ('A', 'B', 'X' or 'Y')
+- L is 'L'
+- R is 'R'
 
 help is 'help'
 
