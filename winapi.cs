@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
@@ -27,18 +28,56 @@ namespace ChatBot
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string lclassName, string windowTitle);
 
+        public delegate bool EnumWindowsProc(IntPtr hwnd, IntPtr lParam);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool EnumChildWindows(IntPtr hwndParent, EnumWindowsProc lpEnumFunc, IntPtr lParam);
+        private static bool EnumWindow(IntPtr handle, IntPtr pointer)
+        {
+            GCHandle gch = GCHandle.FromIntPtr(pointer);
+            List<IntPtr> list = gch.Target as List<IntPtr>;
+            if (list == null)
+            {
+                throw new InvalidCastException("GCHandle Target could not be cast as List<IntPtr>");
+            }
+            list.Add(handle);
+            //  You can modify this to check to see if you want to cancel the operation, then return a null here
+            return true;
+        }
+
+        public static List<IntPtr> GetChildWindows(IntPtr parent)
+        {
+            List<IntPtr> result = new List<IntPtr>();
+            GCHandle listHandle = GCHandle.Alloc(result);
+            try
+            {
+                EnumWindowsProc childProc = new EnumWindowsProc(EnumWindow);
+                EnumChildWindows(parent, childProc, GCHandle.ToIntPtr(listHandle));
+            }
+            finally
+            {
+                if (listHandle.IsAllocated)
+                    listHandle.Free();
+            }
+            return result;
+        }
+
+        [DllImport("kernel32.dll")]
+        static extern int GetProcessId(IntPtr handle);
+
         static public IntPtr set_window(string wName)
         {
             string name = wName.ToLower();
             foreach (Process pList in Process.GetProcesses())
             {
-                if (pList.MainWindowTitle.ToLower().Contains(name))
-                {
-                    Console.WriteLine("WIN: This window was found: '" +
-                            pList.MainWindowTitle + "'");
-                    // Might need to do some findWindowEx
-                    return pList.MainWindowHandle;
-                }
+                if (!pList.MainWindowTitle.ToLower().Contains(name))
+                    continue;
+
+                Console.WriteLine("WIN: This window was found: '" +
+                        pList.MainWindowTitle + "' with hwnd : " + pList.MainWindowHandle);
+                Console.WriteLine("===============================================\n");
+                return pList.MainWindowHandle;
             }
 
             return IntPtr.Zero;
@@ -46,13 +85,11 @@ namespace ChatBot
 
         public bool good(Dictionary<string, string> settings)
         {
-            if (hwnd == IntPtr.Zero)
-            {
-                Console.WriteLine("WIN: No window with name '" + settings["window name"] + "' was found.");
-                return false;
-            }
+            if (hwnd != IntPtr.Zero)
+                return true;
 
-            return true;
+            Console.WriteLine("WIN: No window with name '" + settings["window name"] + "' was found.");
+            return false;
         }
 
         public Winapi(Dictionary<string, string> settings)
@@ -60,57 +97,67 @@ namespace ChatBot
             hwnd = set_window(settings["window name"]);
         }
 
+        private static void loop_child(IntPtr current, int keycode, bool down = false, int level = 0)
+        {
+            List<IntPtr> tmp = GetChildWindows(current);
+            Console.WriteLine(new string('\t', level) + current);
+
+
+            if (down)
+                PostMessage(current, WM_KEYDOWN, keycode, 0);
+            PostMessage(current, WM_KEYUP, keycode, 0);
+
+            foreach (var hwnd in tmp)
+                loop_child(hwnd, keycode, down, level + 1);
+        }
+
+        static public void send_up_down(int keycode)
+        {
+            loop_child(hwnd, keycode, true);
+        }
+        static public void send_up(int keycode)
+        {
+            loop_child(hwnd, keycode);
+        }
         static public void act_upward()
         {
             Console.WriteLine("FCT: upward");
-            PostMessage(hwnd, WM_KEYDOWN, VK_UP, 0);
-            PostMessage(hwnd, WM_KEYUP, VK_UP, 0);
-
+            send_up_down(VK_UP);
         }
         static public void act_downward()
         {
             Console.WriteLine("FCT: downward");
-            PostMessage(hwnd, WM_KEYDOWN, VK_DOWN, 0);
-            PostMessage(hwnd, WM_KEYUP, VK_DOWN, 0);
-
+            send_up_down(VK_DOWN);
         }
         static public void act_left()
         {
             Console.WriteLine("FCT: left");
-            PostMessage(hwnd, WM_KEYDOWN, VK_LEFT, 0);
-            PostMessage(hwnd, WM_KEYUP, VK_LEFT, 0);
-
+            send_up_down(VK_LEFT);
         }
         static public void act_right()
         {
             Console.WriteLine("FCT: right");
-            PostMessage(hwnd, WM_KEYDOWN, VK_RIGHT, 0);
-            PostMessage(hwnd, WM_KEYUP, VK_RIGHT, 0);
-
+            send_up_down(VK_RIGHT);
         }
         static public void act_a()
         {
             Console.WriteLine("FCT: a");
-            // PostMessage(hwnd, WM_KEYDOWN, 'A', 0);
-            PostMessage(hwnd, WM_KEYUP, 'A', 0);
+            send_up('A');
         }
         static public void act_b()
         {
             Console.WriteLine("FCT: b");
-            // PostMessage(hwnd, WM_KEYDOWN, 'B', 0);
-            PostMessage(hwnd, WM_KEYUP, 'B', 0);
+            send_up('B');
         }
         static public void act_x()
         {
             Console.WriteLine("FCT: x");
-            // PostMessage(hwnd, WM_KEYDOWN, 'X', 0);
-            PostMessage(hwnd, WM_KEYUP, 'X', 0);
+            send_up('X');
         }
         static public void act_y()
         {
             Console.WriteLine("FCT: y");
-            // PostMessage(hwnd, WM_KEYDOWN, 'Y', 0);
-            PostMessage(hwnd, WM_KEYUP, 'Y', 0);
+            send_up('Y');
         }
         static public void act_l1()
         {
