@@ -8,7 +8,9 @@ A simple feature includes chaos / order (affects time between messages to let tw
 
 ## Current
 The bot is for now in dev.
-It should not be so hard to develop and should be a lot of fun
+~It should not be so hard to develop and should be a lot of fun~.
+
+I've reached a wall, I can make this program send keys to OverWatch, World of Warcraft, any recent game, but the DeSmuMe window doesn't handle Windows Message... Only DirectInput, and I don't know how to send keys to an inactive window via DirectInput
 
 ## Next steps:
 - Run on youtube
