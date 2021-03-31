@@ -130,6 +130,7 @@ namespace ChatBot
 
                     if (content == "help")
                     {
+                        Console.WriteLine("name -> \"" + help_string + "\"");
                         irc.send(help_string, name);
                     }
                     else if (possibilities_count.ContainsKey(content))
