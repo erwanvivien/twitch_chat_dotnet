@@ -4,10 +4,12 @@ using System.Linq;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
+
 namespace ChatBot
 {
     class Winapi
     {
+
         public static IntPtr hwnd = IntPtr.Zero;
 
         [DllImport("user32.dll")]
@@ -15,7 +17,10 @@ namespace ChatBot
 
         [DllImport("user32.dll")]
         static extern bool PostMessage(IntPtr hWnd,
-                  UInt32 Msg, int wParam, int lParam);
+                  UInt32 Msg, Int64 wParam, Int64 lParam);
+
+        [DllImport("user32.dll")]
+        private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
 
         const int WM_KEYDOWN = 0x100;
         const int WM_KEYUP = 0x101;
@@ -99,16 +104,23 @@ namespace ChatBot
 
         private static void loop_child(IntPtr current, int keycode, bool down = false, int level = 0)
         {
-            List<IntPtr> tmp = GetChildWindows(current);
-            Console.WriteLine(new string('\t', level) + current);
+            /// might not be required
+            // List<IntPtr> children = GetChildWindows(current);
 
+            // // This ↓ is debugging
+            // Console.WriteLine(new string('\t', level) + current);
+
+            // foreach (var child in children)
+            //     loop_child(child, keycode, down, level + 1);
 
             if (down)
-                PostMessage(current, WM_KEYDOWN, keycode, 0);
-            PostMessage(current, WM_KEYUP, keycode, 0);
+                PostMessage(current, WM_KEYDOWN, keycode, 0x00000001);
+            PostMessage(current, WM_KEYUP, keycode, 0xC0000001);
 
-            foreach (var hwnd in tmp)
-                loop_child(hwnd, keycode, down, level + 1);
+            // Raw inputs
+            // keybd_event((byte)keycode, 0, 0x00, 0);
+            // Thread.Sleep(100);
+            // keybd_event((byte)keycode, 0, 0x02, 0);
         }
 
         static public void send_up_down(int keycode)
