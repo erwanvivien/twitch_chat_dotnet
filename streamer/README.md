@@ -28,7 +28,7 @@ log_fct:        [true|false]            # see which action was done last second
 window name:    name                    # A running application (DeSmuME generally)
 
 Any key from this list can be changed to other text, non-case-sensitive (default is itself)
-[ 'up', 'down', 'left', 'right', 'l', 'r', 'a', 'b', 'x', 'y', 'l1', 'l2', 'r1', 'r2', 'help' ]
+KEYS = [ 'up', 'down', 'left', 'right', 'l', 'r', 'a', 'b', 'x', 'y', 'l1', 'l2', 'r1', 'r2', 'help' ]
 KEY:            [text]                  # if you want to 'up' with 'bruh' put 'up: bruh'
 ```
 

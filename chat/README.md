@@ -6,6 +6,6 @@ All here is non-case-sensitive and only the default help message
 - L is 'L'
 - R is 'R'
 
-help is 'help'
+For help message, it's 'help'
 
 Although, your stream could have change the settings and not the help page which is unfortunate...
