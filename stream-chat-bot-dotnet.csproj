@@ -6,4 +6,8 @@
     <RootNamespace>stream_chat_bot_dotnet</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Nefarius.ViGEm.Client" Version="1.17.178" />
+  </ItemGroup>
+
 </Project>
