@@ -22,6 +22,7 @@ namespace ChatBot
         [DllImport("user32.dll")]
         private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
 
+        const int WM_CHAR = 0x102;
         const int WM_KEYDOWN = 0x100;
         const int WM_KEYUP = 0x101;
 
@@ -29,6 +30,19 @@ namespace ChatBot
         const int VK_UP = 0x26;
         const int VK_RIGHT = 0x27;
         const int VK_DOWN = 0x28;
+
+        const int VK_F13 = 0x7C;
+        const int VK_F14 = 0x7D;
+        const int VK_F15 = 0x7E;
+        const int VK_F16 = 0x7F;
+        const int VK_F17 = 0x80;
+        const int VK_F18 = 0x81;
+        const int VK_F19 = 0x82;
+        const int VK_F20 = 0x83;
+        const int VK_F21 = 0x84;
+        const int VK_F22 = 0x85;
+        const int VK_F23 = 0x86;
+        const int VK_F24 = 0x87;
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string lclassName, string windowTitle);
@@ -105,10 +119,10 @@ namespace ChatBot
         private static void loop_child(IntPtr current, int keycode, bool down = false, int level = 0)
         {
             /// might not be required
-            // List<IntPtr> children = GetChildWindows(current);
+            List<IntPtr> children = GetChildWindows(current);
 
-            // // This ↓ is debugging
-            // Console.WriteLine(new string('\t', level) + current);
+            // This ↓ is debugging
+            Console.WriteLine(new string('\t', level) + current);
 
             // foreach (var child in children)
             //     loop_child(child, keycode, down, level + 1);
@@ -118,8 +132,8 @@ namespace ChatBot
             PostMessage(current, WM_KEYUP, keycode, 0xC0000001);
 
             // Raw inputs
-            // keybd_event((byte)keycode, 0, 0x00, 0);
-            // Thread.Sleep(100);
+            // if (down)
+            //     keybd_event((byte)keycode, 0, 0x00, 0);
             // keybd_event((byte)keycode, 0, 0x02, 0);
         }
 
