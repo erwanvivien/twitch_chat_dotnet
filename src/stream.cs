@@ -94,23 +94,22 @@ namespace ChatBot
 
             while (true)
             {
-                // Checks if time is ()
+                // Checks if time is more thank the limit
                 double current = DateTimeOffset.Now.ToUnixTimeMilliseconds();
                 if (now / 1000 + timer <= current / 1000)
                 {
                     double passed = current - now;
                     Console.WriteLine($"ACT: {passed} miliseconds have passed");
 
-                    // Resets timer
-
                     /// Will return the max value
                     var keyOfMaxValue = possibilities_count.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
-                    // Console.WriteLine(keyOfMaxValue);
+                    // Resets the dictionnary
                     possibilities_count.Keys.ToList().ForEach(x => possibilities_count[x] = 0);
 
                     // Executes max key function
                     possibilities[keyOfMaxValue]();
 
+                    // Resets timer
                     now = DateTimeOffset.Now.ToUnixTimeMilliseconds();
                 }
 
